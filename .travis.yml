@@ -1,14 +1,27 @@
+#https://github.com/saharapanna/assignment
 language: node_js
 node_js:
   - 10.9.0
 
 cache: npm
 
+env:
+  - NOW_TOKEN=cQxytBaRgC5xmbOCjZ9z44r3
+
 before_install:
-  - ls -la
+  - "npm config set spin false"
+  - npm i -g now
+install:
   - npm install
-  - mkdir public
-  - ls -la
+
+script:
+  - npm run build
+  - npm run test
+
+deploy:
+  provider: script
+  script: "scripts/deploy.sh"
+  skip_cleanup: true
 
 notifications:
   slack:
